@@ -6,6 +6,7 @@ public class Trash : MonoBehaviour
 {
     Vector2 velocity;
     float movementDrag = 0.5f;
+    int score = 1;
 
     [HideInInspector]
     public Player player;
@@ -24,12 +25,24 @@ public class Trash : MonoBehaviour
         }
     }
 
+
+
+    public int GetScore()
+    {
+        return score;
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (player == null && other.CompareTag("Player"))
         {
             player = other.GetComponent<Player>();
-            player.AddToTrashList(this);
+            player.trashList.Add(this);
         }
+    }
+
+    void OnDestroy()
+    {
+        if (player != null) player.trashList.Remove(this);
     }
 }

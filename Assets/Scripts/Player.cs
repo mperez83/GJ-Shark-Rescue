@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public InstanceMaster instanceMaster;
+
     public float pushForce;
     public float rotateSpeed;
     public float maxSpeed;
@@ -30,7 +32,7 @@ public class Player : MonoBehaviour
         strokeCooldownTimer -= Time.deltaTime;
         if (strokeCooldownTimer < 0) strokeCooldownTimer = 0;
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
             if (strokeCooldownTimer <= 0)
             {
@@ -47,16 +49,15 @@ public class Player : MonoBehaviour
 
 
 
-    public void AddToTrashList(Trash trashToAdd)
-    {
-        trashList.Add(trashToAdd);
-    }
-
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Collector"))
         {
-            print("yay");
+            foreach (Trash trash in trashList)
+            {
+                instanceMaster.AddToScore(trash.GetScore());
+                Destroy(trash.gameObject);
+            }
         }
     }
 }
