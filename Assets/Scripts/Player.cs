@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class Player : MonoBehaviour
     public float strokeCooldownLength;
     float strokeCooldownTimer;
 
+    public float maxAir;
+    float air;
+    public Image airMeter;
+
     public List<Trash> trashList;
 
     Rigidbody2D rb;
@@ -22,13 +27,16 @@ public class Player : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        air = maxAir;
     }
 
     void Update()
     {
+        //Handle rotate stuff
         float rotateDirection = Input.GetAxisRaw("Horizontal");
         transform.Rotate(new Vector3(0, 0, (rotateSpeed * -rotateDirection) * Time.deltaTime));
 
+        //Handle swim stuff
         strokeCooldownTimer -= Time.deltaTime;
         if (strokeCooldownTimer < 0) strokeCooldownTimer = 0;
 
@@ -41,9 +49,26 @@ public class Player : MonoBehaviour
             }
         }
 
+        //Limit speed
         if (rb.velocity.magnitude > maxSpeed)
         {
             rb.velocity = rb.velocity.normalized * maxSpeed;
+        }
+
+        //Handle air
+        if (transform.position.y > 2)
+        {
+            air = maxAir;
+            airMeter.fillAmount = air / maxAir;
+        }
+        else
+        {
+            air -= Time.deltaTime;
+            airMeter.fillAmount = air / maxAir;
+            if (air <= 0)
+            {
+                instanceMaster.EndGame();
+            }
         }
     }
 

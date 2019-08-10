@@ -27,10 +27,7 @@ public class InstanceMaster : MonoBehaviour
         if (dayTimer <= 0 && !gameEnded)
         {
             dayTimer = 0;
-            gameEnded = true;
-            Time.timeScale = 0;
-            gameOverCanvas.SetActive(true);
-            finalScoreText.text = "Final Score: " + score.ToString();
+            EndGame();
         }
         timerText.text = "Timer: " + dayTimer.ToString("F1");
     }
@@ -39,5 +36,13 @@ public class InstanceMaster : MonoBehaviour
     {
         score += amount;
         scoreText.text = "Score: " + score.ToString();
+    }
+
+    public void EndGame()
+    {
+        gameEnded = true;
+        Time.timeScale = 0;
+        gameOverCanvas.SetActive(true);
+        finalScoreText.text = "Final Score: " + score.ToString();
     }
 }
