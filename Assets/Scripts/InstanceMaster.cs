@@ -17,6 +17,7 @@ public class InstanceMaster : MonoBehaviour
     public TextMeshProUGUI shopTrashCurrencyText;
 
     public GameObject gameOverCanvas;
+    public TextMeshProUGUI gameOverText;
     public TextMeshProUGUI finalScoreText;
 
     void Start()
@@ -30,7 +31,7 @@ public class InstanceMaster : MonoBehaviour
         if (dayTimer <= 0 && !gameEnded)
         {
             dayTimer = 0;
-            EndGame();
+            EndGame(0);
         }
         timerText.text = "Timer: " + dayTimer.ToString("F1");
     }
@@ -64,11 +65,29 @@ public class InstanceMaster : MonoBehaviour
         currency -= amount;
     }
 
-    public void EndGame()
+    public void EndGame(int lossType)
     {
         gameEnded = true;
         Time.timeScale = 0;
         gameOverCanvas.SetActive(true);
         finalScoreText.text = "Final Score: " + score.ToString();
+        switch (lossType)
+        {
+            case 0:
+                gameOverText.text = "You ran out of time!";
+                break;
+
+            case 1:
+                gameOverText.text = "You drowned!";
+                break;
+
+            case 2:
+                gameOverText.text = "You super died";
+                break;
+
+            default:
+                gameOverText.text = "Game over!";
+                break;
+        }
     }
 }

@@ -19,8 +19,8 @@ public class GameMaster : MonoBehaviour
     [HideInInspector]
     public float screenRightEdge;
 
-    /*[HideInInspector]
-    public MusicMaster musicMaster;*/
+    [HideInInspector]
+    public MusicMaster musicMaster;
 
 
 
@@ -39,17 +39,17 @@ public class GameMaster : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Confined;
 
-        /*musicMaster = GetComponent<MusicMaster>();
+        musicMaster = GetComponent<MusicMaster>();
         switch (SceneManager.GetActiveScene().name)
         {
             case "MainMenu":
-                musicMaster.PlayMenuMusic();
+                musicMaster.PlayMainMenuMusic();
                 break;
 
             case "Game":
                 musicMaster.PlayGameMusic();
                 break;
-        }*/
+        }
 
         screenTopEdge = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, -(Camera.main.transform.position.z))).y;
         screenBottomEdge = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, -(Camera.main.transform.position.z))).y;

@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
 
     public List<Trash> trashList;
 
+    SpriteRenderer sr;
     Rigidbody2D rb;
     Animator anim;
 
@@ -34,6 +35,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         air = maxAir;
+        sr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
     }
@@ -43,6 +45,11 @@ public class Player : MonoBehaviour
         //Handle rotate stuff
         float rotateDirection = Input.GetAxisRaw("Horizontal");
         transform.Rotate(new Vector3(0, 0, (rotateSpeed * salsaRotateBuff * -rotateDirection) * Time.deltaTime));
+
+        if (transform.eulerAngles.z > 90 && transform.eulerAngles.z < 270)
+            sr.flipY = true;
+        else
+            sr.flipY = false;
 
         //Handle swim stuff
         strokeCooldownTimer -= Time.deltaTime * salsaStrokeBuff;
@@ -76,7 +83,7 @@ public class Player : MonoBehaviour
             airMeter.fillAmount = air / maxAir;
             if (air <= 0)
             {
-                if (!instanceMaster.GetGameEnded()) instanceMaster.EndGame();
+                if (!instanceMaster.GetGameEnded()) instanceMaster.EndGame(1);
             }
         }
     }
@@ -93,7 +100,7 @@ public class Player : MonoBehaviour
 
     public void EndExplode()
     {
-        instanceMaster.EndGame();
+        instanceMaster.EndGame(2);
     }
 
     IEnumerator SalsaPower()
@@ -102,13 +109,13 @@ public class Player : MonoBehaviour
         salsaRotateBuff = 2;
         salsaStrokeBuff = 2;
         rb.drag *= 2;
-        GetComponent<SpriteRenderer>().color = new Color(128, 0, 0);
+        sr.color = new Color(128, 0, 0);
         yield return new WaitForSeconds(8);
         salsaForceBuff = 1;
         salsaRotateBuff = 1;
         salsaStrokeBuff = 1;
         rb.drag /= 2;
-        GetComponent<SpriteRenderer>().color = new Color(255, 255, 255);
+        sr.color = new Color(255, 255, 255);
     }
 
 

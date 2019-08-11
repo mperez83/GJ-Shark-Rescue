@@ -50,6 +50,11 @@ public class Trash : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+
+        if (other.CompareTag("Werewolf Shark"))
+        {
+            Destroy(gameObject);
+        }
     }
 
     void OnDestroy()

@@ -17,6 +17,7 @@ public class MainMenuHandler : MonoBehaviour
 
     public void PlayButton()
     {
+        GameMaster.instance.musicMaster.PlayGameMusic();
         SceneManager.LoadScene("Game");
     }
 

@@ -24,6 +24,7 @@ public class GameOverMenuHandler : MonoBehaviour
     public void QuitButton()
     {
         Time.timeScale = 1;
+        GameMaster.instance.musicMaster.PlayMainMenuMusic();
         SceneManager.LoadScene("MainMenu");
     }
 }

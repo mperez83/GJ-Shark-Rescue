@@ -9,10 +9,12 @@ public class WerewolfShark : MonoBehaviour
     public float accelerationForce;
     public float maxSpeed;
 
+    SpriteRenderer sr;
     Rigidbody2D rb;
 
     void Start()
     {
+        sr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -21,6 +23,11 @@ public class WerewolfShark : MonoBehaviour
         Vector3 dir = transform.position - player.transform.position;
         var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+        if (transform.eulerAngles.z > 90 && transform.eulerAngles.z < 270)
+            sr.flipY = true;
+        else
+            sr.flipY = false;
     }
 
     void FixedUpdate()
