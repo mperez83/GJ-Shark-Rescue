@@ -7,6 +7,7 @@ public class Trash : MonoBehaviour
     Vector2 velocity;
     float movementDrag = 0.5f;
     public int scoreValue = 1;
+    public bool isSalsa;
 
     [HideInInspector]
     public Player player;
@@ -37,8 +38,17 @@ public class Trash : MonoBehaviour
     {
         if (player == null && other.CompareTag("Player"))
         {
-            player = other.GetComponent<Player>();
-            player.trashList.Add(this);
+            if (!isSalsa)
+            {
+                player = other.GetComponent<Player>();
+                player.trashList.Add(this);
+            }
+            else
+            {
+                player = other.GetComponent<Player>();
+                player.StartCoroutine("SalsaPower");
+                Destroy(gameObject);
+            }
         }
     }
 

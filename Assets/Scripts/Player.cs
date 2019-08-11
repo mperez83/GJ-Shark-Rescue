@@ -11,6 +11,10 @@ public class Player : MonoBehaviour
     public float rotateSpeed;
     public float maxSpeed;
 
+    float salsaForceBuff = 1;
+    float salsaRotateBuff = 1;
+    float salsaStrokeBuff = 1;
+
     public float strokeCooldownLength;
     float strokeCooldownTimer;
 
@@ -38,10 +42,10 @@ public class Player : MonoBehaviour
     {
         //Handle rotate stuff
         float rotateDirection = Input.GetAxisRaw("Horizontal");
-        transform.Rotate(new Vector3(0, 0, (rotateSpeed * -rotateDirection) * Time.deltaTime));
+        transform.Rotate(new Vector3(0, 0, (rotateSpeed * salsaRotateBuff * -rotateDirection) * Time.deltaTime));
 
         //Handle swim stuff
-        strokeCooldownTimer -= Time.deltaTime;
+        strokeCooldownTimer -= Time.deltaTime * salsaStrokeBuff;
         if (strokeCooldownTimer < 0) strokeCooldownTimer = 0;
 
         if (Input.GetKey(KeyCode.Space))
@@ -49,7 +53,7 @@ public class Player : MonoBehaviour
             if (strokeCooldownTimer <= 0)
             {
                 strokeCooldownTimer = strokeCooldownLength;
-                rb.AddForce(-transform.right * pushForce);
+                rb.AddForce(-transform.right * pushForce * salsaForceBuff);
             }
         }
 
@@ -77,9 +81,12 @@ public class Player : MonoBehaviour
         }
     }
 
+
+
     public void Explode()
     {
         rb.velocity = Vector2.zero;
+        pushForce = 0;
         Destroy(GetComponent<BoxCollider2D>());
         anim.Play("Duck_Explode");
     }
@@ -87,6 +94,21 @@ public class Player : MonoBehaviour
     public void EndExplode()
     {
         instanceMaster.EndGame();
+    }
+
+    IEnumerator SalsaPower()
+    {
+        salsaForceBuff = 3;
+        salsaRotateBuff = 2;
+        salsaStrokeBuff = 2;
+        rb.drag *= 2;
+        GetComponent<SpriteRenderer>().color = new Color(128, 0, 0);
+        yield return new WaitForSeconds(8);
+        salsaForceBuff = 1;
+        salsaRotateBuff = 1;
+        salsaStrokeBuff = 1;
+        rb.drag /= 2;
+        GetComponent<SpriteRenderer>().color = new Color(255, 255, 255);
     }
 
 
