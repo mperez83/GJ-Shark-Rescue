@@ -6,14 +6,15 @@ public class Trash : MonoBehaviour
 {
     Vector2 velocity;
     float movementDrag = 0.5f;
-    int score = 1;
+    public int scoreValue = 1;
 
     [HideInInspector]
     public Player player;
 
     void Start()
     {
-
+        GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-4f, 4f), Random.Range(-4f, 4f)));
+        GetComponent<Rigidbody2D>().AddTorque(Random.Range(-10f, 10f));
     }
 
     void Update()
@@ -29,7 +30,7 @@ public class Trash : MonoBehaviour
 
     public int GetScore()
     {
-        return score;
+        return scoreValue;
     }
 
     void OnTriggerEnter2D(Collider2D other)

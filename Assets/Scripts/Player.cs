@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
     float air;
     public Image airMeter;
 
+    public GameObject shopPanel;
+
     public List<Trash> trashList;
 
     Rigidbody2D rb;
@@ -83,6 +85,15 @@ public class Player : MonoBehaviour
                 instanceMaster.AddToScore(trash.GetScore());
                 Destroy(trash.gameObject);
             }
+            shopPanel.SetActive(true);
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Collector"))
+        {
+            shopPanel.SetActive(false);
         }
     }
 }

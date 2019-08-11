@@ -6,12 +6,15 @@ using TMPro;
 public class InstanceMaster : MonoBehaviour
 {
     int score;
+    int currency;
     public float dayTimerLength;    //In seconds
     float dayTimer;
     bool gameEnded;
 
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI timerText;
+
+    public TextMeshProUGUI shopTrashCurrencyText;
 
     public GameObject gameOverCanvas;
     public TextMeshProUGUI finalScoreText;
@@ -32,10 +35,28 @@ public class InstanceMaster : MonoBehaviour
         timerText.text = "Timer: " + dayTimer.ToString("F1");
     }
 
+    public void AddToTimer(float amount)
+    {
+        dayTimer += amount;
+    }
+
     public void AddToScore(int amount)
     {
         score += amount;
         scoreText.text = "Score: " + score.ToString();
+
+        currency += amount;
+        shopTrashCurrencyText.text = "Trash Currency: " + currency;
+    }
+
+    public int GetCurrency()
+    {
+        return currency;
+    }
+
+    public void SubtractFromCurrency(int amount)
+    {
+        currency -= amount;
     }
 
     public void EndGame()
