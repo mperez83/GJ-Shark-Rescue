@@ -54,6 +54,11 @@ public class InstanceMaster : MonoBehaviour
         return currency;
     }
 
+    public bool GetGameEnded()
+    {
+        return gameEnded;
+    }
+
     public void SubtractFromCurrency(int amount)
     {
         currency -= amount;

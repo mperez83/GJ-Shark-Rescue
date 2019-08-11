@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
             airMeter.fillAmount = air / maxAir;
             if (air <= 0)
             {
-                instanceMaster.EndGame();
+                if (!instanceMaster.GetGameEnded()) instanceMaster.EndGame();
             }
         }
     }
@@ -98,7 +98,7 @@ public class Player : MonoBehaviour
 
     IEnumerator SalsaPower()
     {
-        salsaForceBuff = 3;
+        salsaForceBuff = 4;
         salsaRotateBuff = 2;
         salsaStrokeBuff = 2;
         rb.drag *= 2;
