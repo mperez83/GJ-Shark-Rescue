@@ -10,8 +10,8 @@ public class MusicMaster : MonoBehaviour
 
     public void PlayMainMenuMusic()
     {
-        //audioSource.clip = menuMusic;
-        //audioSource.Play();
+        audioSource.clip = menuMusic;
+        audioSource.Play();
     }
 
     public void PlayGameMusic()

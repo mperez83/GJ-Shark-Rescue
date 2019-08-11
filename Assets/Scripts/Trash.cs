@@ -12,8 +12,13 @@ public class Trash : MonoBehaviour
     [HideInInspector]
     public Player player;
 
+    AudioSource audioSource;
+
+
+
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-4f, 4f), Random.Range(-4f, 4f)));
         GetComponent<Rigidbody2D>().AddTorque(Random.Range(-10f, 10f));
     }
@@ -42,6 +47,7 @@ public class Trash : MonoBehaviour
             {
                 player = other.GetComponent<Player>();
                 player.trashList.Add(this);
+                audioSource.Play();
             }
             else
             {

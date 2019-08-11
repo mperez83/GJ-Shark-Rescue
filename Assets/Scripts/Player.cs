@@ -29,6 +29,10 @@ public class Player : MonoBehaviour
     SpriteRenderer sr;
     Rigidbody2D rb;
     Animator anim;
+    AudioSource audioSource;
+    public AudioClip swimBelow;
+    public AudioClip explodeSound;
+    public AudioClip trashBinSound;
 
 
 
@@ -38,6 +42,7 @@ public class Player : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -61,6 +66,8 @@ public class Player : MonoBehaviour
             {
                 strokeCooldownTimer = strokeCooldownLength;
                 rb.AddForce(-transform.right * pushForce * salsaForceBuff);
+                audioSource.clip = swimBelow;
+                audioSource.Play();
             }
         }
 
@@ -96,6 +103,8 @@ public class Player : MonoBehaviour
         pushForce = 0;
         Destroy(GetComponent<BoxCollider2D>());
         anim.Play("Duck_Explode");
+        audioSource.clip = explodeSound;
+        audioSource.Play();
     }
 
     public void EndExplode()
@@ -105,7 +114,7 @@ public class Player : MonoBehaviour
 
     IEnumerator SalsaPower()
     {
-        salsaForceBuff = 4;
+        salsaForceBuff = 5;
         salsaRotateBuff = 2;
         salsaStrokeBuff = 2;
         rb.drag *= 2;
@@ -130,6 +139,8 @@ public class Player : MonoBehaviour
                 Destroy(trash.gameObject);
             }
             shopPanel.SetActive(true);
+            audioSource.clip = trashBinSound;
+            audioSource.Play();
         }
     }
 
