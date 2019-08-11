@@ -23,13 +23,15 @@ public class Player : MonoBehaviour
     public List<Trash> trashList;
 
     Rigidbody2D rb;
+    Animator anim;
 
 
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
         air = maxAir;
+        rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
 
     void Update()
@@ -58,9 +60,10 @@ public class Player : MonoBehaviour
         }
 
         //Handle air
-        if (transform.position.y > 2)
+        if (transform.position.y > 1.8f)
         {
-            air = maxAir;
+            air += Time.deltaTime * 3;
+            if (air > maxAir) air = maxAir;
             airMeter.fillAmount = air / maxAir;
         }
         else
@@ -72,6 +75,18 @@ public class Player : MonoBehaviour
                 instanceMaster.EndGame();
             }
         }
+    }
+
+    public void Explode()
+    {
+        rb.velocity = Vector2.zero;
+        Destroy(GetComponent<BoxCollider2D>());
+        anim.Play("Duck_Explode");
+    }
+
+    public void EndExplode()
+    {
+        instanceMaster.EndGame();
     }
 
 
