@@ -1,4 +1,4 @@
-# Shark-Rescue
+# TGJ15-Shark-Rescue
 Unity game submission for the 15th Tilted Game Jam! In this game, you play as a duck that must clean up the litter in the ocean to make the shark happy.
 
 Play it here: https://starbladek.itch.io/shark-rescue
